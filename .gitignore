@@ -1,0 +1,27 @@
+# 数据和文献
+*.csv
+*.xlsx
+*.xls
+*.txt
+*.dat
+*.pdf
+*.cif
+*.pdb
+*.gro
+*.xtc
+*.trr
+*.dcd
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 个人配置
+CLAUDE.local.md
