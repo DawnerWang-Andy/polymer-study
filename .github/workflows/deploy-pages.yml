@@ -1,0 +1,57 @@
+name: Deploy Dashboard to Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '00-首页/**'
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 准备部署目录
+        run: |
+          mkdir -p _site
+          cp 00-首页/*.html _site/
+          # 创建首页跳转
+          cat > _site/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="zh-CN">
+          <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Polymer Study — 看板导航</title>
+          <style>
+            body { font-family: system-ui, sans-serif; background: #0a0e17; color: #e2e8f0;
+                   display: flex; flex-direction: column; align-items: center; justify-content: center;
+                   min-height: 100vh; gap: 1.5rem; }
+            a { color: #60a5fa; text-decoration: none; font-size: 1.2rem; padding: 1rem 2rem;
+                border: 1px solid #1e293b; border-radius: 12px; background: #111827;
+                transition: all 0.2s; }
+            a:hover { border-color: #3b82f6; box-shadow: 0 0 20px rgba(59,130,246,0.2); }
+          </style>
+          </head>
+          <body>
+            <h1>Polymer Study 看板</h1>
+            <a href="AI模型协作看板.html">AI 模型协作看板</a>
+            <a href="Agent工具分工看板.html">Agent & 工具分工看板</a>
+          </body>
+          </html>
+          EOF
+
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+      - id: deployment
+        uses: actions/deploy-pages@v4

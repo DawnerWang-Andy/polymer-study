@@ -1,0 +1,27 @@
+{
+  "name": "Polymer Study",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers/features/conda:1": {}
+  },
+  "postCreateCommand": "pip install numpy scipy matplotlib pandas scikit-learn rdkit jupyter",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "yzhang.markdown-all-in-one",
+        "github.copilot",
+        "github.copilot-chat",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "editor.fontSize": 16,
+        "editor.fontFamily": "'Cascadia Code', Menlo, monospace",
+        "editor.rulers": [88, 120],
+        "files.autoSave": "onWindowChange"
+      }
+    }
+  }
+}

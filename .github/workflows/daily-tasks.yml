@@ -1,0 +1,26 @@
+name: Daily Tasks
+
+on:
+  schedule:
+    # 北京时间 7:00 = UTC 23:00 (前一天)
+    - cron: '0 23 * * *'
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  daily-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 运行每日计划
+        run: python scripts/daily-welcome.py
+
+      - name: 运行考试提醒
+        run: python scripts/exam-reminder.py
+
+      - name: 运行习惯打卡
+        run: python scripts/habit-tracker.py
