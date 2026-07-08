@@ -25,3 +25,9 @@ Thumbs.db
 
 # 个人配置
 CLAUDE.local.md
+
+# 环境变量与凭证（严禁提交，模板见 .env.example）
+.env
+.env.*
+!.env.example
+
