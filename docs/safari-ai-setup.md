@@ -1,167 +1,230 @@
-# Safari AI 插件配置指南
+# Safari AI 插件配置指南（国内直连版）
+
+**背景**：原方案中的 DeepL、沉浸式翻译（部分功能）、Perplexity、Glasp、Wiseone 在中国大陆访问不稳定或无法注册。本文档全部替换为**国内直连、免翻墙、可用手机号注册**的国产方案。
 
 **目标**：为高分子专业本科生（读英文文献 + 写报告 + 大创项目）配置 Safari AI 生态。
 
 **执行顺序**：
-1. `bash scripts/setup-safari-ai.sh` 一键打开所有插件的 App Store 页面
-2. 在每个页面点"获取"完成安装
+1. `bash scripts/setup-safari-ai.sh` 一键打开所有插件页面
+2. 在 App Store 点"获取"完成安装
 3. 打开 Safari → 设置 → 扩展 → 逐个勾选启用
-4. 按本文档逐个配置
+4. 按本文档逐个配置（大多只需手机号登录，无需 API Key）
 
 ---
 
-## 一、沉浸式翻译 (Immersive Translate)
+## 插件全景对照表
 
-**用途**：读 Nature / JACS 等英文文献时中英对照显示
+| 场景 | 用哪个 | 免费额度 | 门槛 |
+|------|--------|---------|------|
+| 读英文长论文（喂进去让 AI 讲解） | **Kimi 智能助手** | 免费，200k 上下文 | 手机号 |
+| 查资料（带文献引用） | **秘塔 AI 搜索**（网页） | 完全免费 | 无 |
+| 划词翻译单词/短语 | **有道翻译** | 完全免费 | 无 |
+| 全文翻译 + AI 对话一体 | **豆包** | 完全免费 | 手机号 |
+| 网页保存到 Obsidian | **Obsidian Web Clipper** | 完全免费 | 无 |
 
-### 配置步骤
-1. 点击 Safari 工具栏的沉浸式翻译图标 → 设置
-2. **翻译服务** 添加三个引擎（对应你选的"全部配上"方案）：
-
-| 引擎 | 用途 | 需要 API Key |
-|------|------|--------------|
-| **谷歌翻译** | 日常浏览（默认） | 否，免费无限 |
-| **DeepL** | 高质量翻译 | 是，见下方 |
-| **Claude / OpenAI** | 专业论文，可指定学术风格 | 是，读取 `.env` |
-
-### DeepL Key 申请
-1. 访问 https://www.deepl.com/pro-api（选免费版 DeepL API Free）
-2. 用邮箱注册（需要绑定信用卡，但免费额度 50万字符/月不扣费）
-3. 拿到 Auth Key 后填入沉浸式翻译 → DeepL → 认证密钥
-
-### Claude 配置（推荐用于文献）
-在沉浸式翻译中选"自定义 AI 翻译服务"：
-- API 地址：`https://api.anthropic.com/v1/messages`
-- 模型：`claude-sonnet-5`（性价比最高）或 `claude-opus-4-8`
-- API Key：从 `.env` 里的 `ANTHROPIC_API_KEY` 复制
-- 自定义 Prompt（学术风格）：
-  ```
-  你是一名高分子材料专业的学术翻译。请将以下英文翻译成中文，
-  保持专业术语准确（如 monomer→单体、glass transition→玻璃化转变），
-  英文缩写和公式保留原文，语言流畅、符合中文学术论文风格。
-  ```
-
-### 快捷键
-- `Option + A` 翻译整个页面
-- `Option + W` 切换鼠标悬停翻译
+**核心变化**：**都不需要 API Key**，全部手机号登录或匿名可用。
 
 ---
 
-## 二、Wiseone（SciSpace 的 Safari 替代品）
+## 一、Kimi 智能助手（读长论文神器）
 
-**注意**：SciSpace Copilot 官方目前只有 Chrome 扩展，Safari 上用 **Wiseone** 作为替代。
-
-**用途**：读英文网页 / PDF 时划词自动解释术语、公式、缩写。
+**用途**：把 Nature/JACS 长论文喂给 Kimi，让它做中文讲解、翻译、总结、答疑。200k 上下文足够整篇论文一次读完。
 
 ### 配置
-1. 首次打开注册（免费版够用）
-2. 设置 → Language → 输出语言选"中文"
-3. Reading Mode → 开启"Auto-explain complex terms"（自动解释复杂词）
-
-### 使用
-- 在 Nature / arXiv HTML 页面上划词 → 弹窗显示定义 + 相关文献
-- PDF 需要用 Safari 打开在线 PDF（本地 PDF 建议直接用 Zotero）
-
----
-
-## 三、Perplexity - Ask AI
-
-**用途**：查资料、找文献时的智能搜索，结果带引用来源。
-
-### 配置
-1. 首次打开注册（免费版每天 5 次 Pro Search，日常够用）
-2. 设置 → Default AI Model → 选 `Claude 3.5 Sonnet` 或 `GPT-4o`
-3. Focus Mode → 默认设为 `Academic`（自动限定学术源）
+1. App Store 安装后，打开 Safari → 设置 → 扩展 → 勾选"Kimi"
+2. 首次点击 Safari 工具栏的 Kimi 图标 → 用手机号或微信登录
+3. 设置 → 快捷键 → 设为 `Option + K`（呼出侧边栏）
 
 ### 使用场景
-- 查"高熵金属配位聚合物 电催化甘油氧化 最新进展" → 得到带引用的综述
-- 需要孤证时对照 DocsGPT 本地知识库使用
+- 在 Nature 论文页面 → 点击 Kimi 图标 → "总结这篇论文的核心贡献"
+- "把第 3 节翻译成中文，专业术语保留英文原文"
+- "这篇论文用了什么表征手段？和 XX 方法对比如何？"
+- **配合 DocsGPT**：Kimi 读全文快，DocsGPT 查本地库准，交叉验证
+
+### 学术专用 Prompt 模板
+把下面这段保存到"自定义指令"里（Kimi 设置 → 系统提示词）：
+```
+你是一名高分子材料专业的学术助手。回答时：
+1. 专业术语保留英文原文括注（如"玻璃化转变(Tg)"）
+2. 化学式、公式、单位保留原文
+3. 引用论文数据时注明章节/图表编号
+4. 用中文回答，语言简洁准确
+```
 
 ---
 
-## 四、Glasp（网页高亮 + Obsidian 联动）
+## 二、秘塔 AI 搜索（Perplexity 国内替代）
 
-**用途**：读网页/YouTube 时高亮 → 自动同步到 Obsidian。
+**用途**：查"XX 是什么"、"XX 最新进展"，返回带引用的答案，学术源比 Perplexity 中文覆盖更好。
+
+**注意**：秘塔没有独立 Safari 扩展，直接用**网页版 + Safari 书签**即可。
 
 ### 配置
-1. 首次打开用 Google 账号登录
-2. 设置 → Integrations → **Obsidian**：
-   - 选择 Vault：`polymer-study`
-   - 文件夹路径：`02-科研地图/文献笔记/glasp/`
-   - 文件模板选 "Individual notes"（每条高亮一个文件）
-3. AI Summary：开启"Auto-generate summary"（每篇网页自动 AI 摘要）
+1. 打开 https://metaso.cn
+2. `⌘ + D` 加入书签，放到收藏栏
+3. 右上角选"学术"模式（学术源优先）
+4. 可选：注册账号（手机号）解锁"深入研究"功能
 
-### Obsidian 联动细节
-Glasp 会在 `02-科研地图/文献笔记/glasp/` 下生成 Markdown 文件，格式：
+### 使用场景
+- "高熵金属配位聚合物 电催化 甘油氧化" → 返回带 CNKI/万方/arXiv 引用的综述
+- 每条结果可以直接跳转到源文献 PDF
+- 支持"追问"（对话式检索）
+
+### 与本地 DocsGPT 的分工
+- **秘塔** = 全网找新文献
+- **DocsGPT**（`python scripts/ask-docsgpt.py`）= 查你已经上传的论文
+
+---
+
+## 三、有道翻译（划词翻译 + 专业词典）
+
+**用途**：读英文网页/文献时划词翻译，专业词典库大（含化学、材料、生物等）。
+
+### 配置
+1. App Store 安装 → Safari 设置 → 扩展 → 勾选"有道翻译"
+2. 首次打开无需登录
+3. 设置 → 翻译方向 → 英译中
+4. 设置 → 开启"划词翻译"和"取词翻译"
+
+### 使用
+- 划词 → 弹窗显示中文释义 + 例句
+- 长按单词 → 显示词根词源、学科分类（会标"化学"、"高分子"等）
+- 快捷键 `⌘ + Shift + T` 翻译整个页面
+
+### 局限
+有道对**整段学术论文**的翻译质量不如 Kimi/豆包，建议：
+- 单词/短语 → 有道
+- 整段/整篇 → Kimi 或豆包
+
+---
+
+## 四、豆包（字节 AI，全文翻译 + 对话）
+
+**用途**：作为沉浸式翻译的国内平替。可以做整页翻译、AI 对话，模型是字节自研的豆包大模型。
+
+### 配置
+1. App Store 安装 → Safari 设置 → 扩展 → 勾选"豆包"
+2. 手机号登录（免费）
+3. 设置 → 翻译 → 开启"页面翻译"和"划词翻译"
+4. 翻译风格选"专业/学术"
+
+### 使用场景
+- 打开 Nature 页面 → 点豆包图标 → "翻译整页" → 中英对照显示
+- 侧边栏对话："帮我把这篇论文的摘要改写成中文口语版"
+- 支持上传 PDF 直接总结（网页版 doubao.com 里）
+
+### Kimi vs 豆包
+| | Kimi | 豆包 |
+|--|------|------|
+| 上下文长度 | 200k | 128k |
+| 学术论文能力 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
+| 划词翻译 | 弱 | 强 |
+| 生态整合 | 无 | 与飞书/剪映联动 |
+
+**建议**：两个都装，读长论文用 Kimi，日常翻译用豆包。
+
+---
+
+## 五、Obsidian Web Clipper（Glasp 官方替代）
+
+**用途**：把网页/论文剪藏到你本地 Obsidian Vault，直接生成 Markdown 文件。Glasp 服务在国外，这个是 Obsidian 官方出的，完全本地化。
+
+### 配置
+1. 访问 https://obsidian.md/clipper 下载 Safari 扩展
+2. Safari 设置 → 扩展 → 勾选"Obsidian Web Clipper"
+3. 点扩展图标 → 设置：
+   - **Vault**: 选 `polymer-study`
+   - **默认文件夹**: `02-科研地图/文献笔记/web-clip/`
+   - **模板**: 选"Default"或"Academic Paper"
+
+### 学术论文剪藏模板
+在 Web Clipper 设置里新建模板"Nature Paper"，Frontmatter 设为：
 ```yaml
 ---
-title: <网页标题>
-url: <原网址>
-tags: [glasp, highlight]
-date: 2026-07-08
+title: "{{title}}"
+authors: "{{author}}"
+journal: "{{site}}"
+url: "{{url}}"
+doi: "{{selector:meta[name=citation_doi]}}"
+date_clipped: "{{date}}"
+tags: [论文, web-clip]
 ---
 
-## AI Summary
-...
+## 摘要
+{{selector:section#abstract}}
 
-## Highlights
-- 高亮1
-- 高亮2
+## 全文
+{{content}}
 ```
 
-配合你 Vault 里的 Dataview 查询，可以在文献笔记主页统一浏览所有高亮。
+### 我已经预建的目录
+`02-科研地图/文献笔记/web-clip/` — 之前叫 glasp，已在下一步 commit 中改名。
+
+### 使用
+- 在任何论文/网页页面点扩展图标 → "Clip Page" → 自动生成 Markdown → Vault 里立即出现
+- 支持只保存选中区域（划词后点 Clip Selection）
 
 ---
 
-## 五、`.env` 文件配置
+## 六、需要清理的旧配置
 
-复制模板并填入 Key：
+之前给 DeepL 加的 `.env` 占位可以留着（不占空间），但 `DEEPL_API_KEY` 不用填了。真正会用到的是：
+
 ```bash
-cp .env.example .env
-vim .env  # 或用 VS Code 打开
+# .env 里现在实际不需要填任何 Safari 插件相关 Key
+# 因为国产方案全部走手机号登录，不用 API Key
 ```
 
-需要填的字段（已在 `.env.example` 里预留）：
-- `DEEPL_API_KEY` — 沉浸式翻译用
-- `ANTHROPIC_API_KEY` — 沉浸式翻译 Claude 模式 + 你其他项目通用
-- `OPENAI_API_KEY` — 沉浸式翻译 GPT 模式（可选）
-
-**注意**：Safari 插件是独立 App，无法直接读 `.env`。`.env` 只是你记录 Key 的中转站，最后要**手动复制到各个插件的设置面板里**。
+如果之后你想用 Kimi API（做自动化脚本）：
+- 访问 https://platform.moonshot.cn/console/api-keys
+- 手机号登录 → 新建 API Key
+- 填入 `.env` 的 `KIMI_API_KEY`（我们下面会加）
 
 ---
 
-## 六、装完后的自检清单
+## 七、装完的自检清单
 
-打开 Safari 一个 Nature 论文页面（比如 https://www.nature.com/articles/s41586-023-06600-9），验证：
+打开一篇中文 Nature 综述（比如 https://www.nature.com/articles/s41586-023-06600-9），验证：
 
-- [ ] 沉浸式翻译：按 `Option + A` 出现中英对照
-- [ ] Wiseone：划词 "polymerization" 弹窗出现定义
-- [ ] Perplexity：工具栏图标可打开侧边栏搜索
-- [ ] Glasp：选中一段文字出现"Highlight"按钮，点击后同步到 Obsidian
+- [ ] Kimi：点扩展图标 → 侧边栏出现 → 问"总结这篇论文" → 有中文回答
+- [ ] 秘塔：书签打开 metaso.cn → 搜"高熵合金" → 出现带引用结果
+- [ ] 有道：划词"polymerization" → 弹窗显示"聚合作用"
+- [ ] 豆包：点扩展图标 → "翻译整页" → 中英对照显示
+- [ ] Web Clipper：点扩展图标 → Clip → `02-科研地图/文献笔记/web-clip/` 出现新 md 文件
 
 全部通过 = 配置成功 ✅
 
 ---
 
-## 七、日常使用建议
+## 八、日常场景速查表
 
 | 场景 | 用哪个 |
 |------|--------|
-| 读一篇 Nature 论文 | 沉浸式翻译（Claude 引擎）+ Wiseone 划词 |
-| 查"XX 是什么" | Perplexity（带引用） |
-| 想把网页内容存进 Obsidian | Glasp 高亮 |
+| 读一篇英文 Nature 论文 | Kimi（丢进去让它讲解）+ 有道（划词查生词） |
+| 查"XX 最新进展" | 秘塔 AI 搜索 |
+| 快速翻译整页 | 豆包 |
+| 想把网页/论文存进 Obsidian | Web Clipper |
 | 查本地已上传的论文 | `python scripts/ask-docsgpt.py "问题"`（不用 Safari 插件） |
-| 翻译日常英文网页 | 沉浸式翻译（谷歌引擎，快） |
+| 写学术报告要润色中文 | Kimi 或豆包（发消息让它改） |
+| 想让 AI 帮我读全文并生成引文 | Kimi + 让它按 ACS 格式输出参考文献 |
 
 ---
 
 ## 常见问题
 
-**Q: 沉浸式翻译按了 Option+A 没反应？**
-A: 检查 Safari → 设置 → 扩展 → 沉浸式翻译 → 权限，改为"在所有网站上允许"。
+**Q: Kimi/豆包免费能用多久？**
+A: 目前（2026-07）都是完全免费，无每日限制。如果哪天开始限速，可以充值或换智谱 GLM-4-Flash（也免费）。
 
-**Q: SciSpace 的 Chrome 版能不能装到 Safari？**
-A: 不能。Safari 的扩展格式和 Chrome 不兼容，必须用 Wiseone 替代。如果你非常需要 SciSpace，可以装个 Chrome 只用来读论文。
+**Q: 秘塔为什么不装扩展？**
+A: 官方没做 Safari 扩展。网页版体验已经足够好，加个书签就行。如果你非要扩展形式，可以在 Safari 设置里把 metaso.cn 加到"启动页"。
 
-**Q: Glasp 同步到 Obsidian 是双向的吗？**
-A: 单向。Glasp → Obsidian，不会反过来。如果你在 Obsidian 里改了笔记不会影响 Glasp 云端。
+**Q: Web Clipper 会同步到手机吗？**
+A: 会。如果你用了 Obsidian Sync 或 iCloud 同步 Vault，剪藏的内容会自动出现在手机/iPad 的 Obsidian 里。
+
+**Q: 沉浸式翻译真的一点都用不了吗？**
+A: 沉浸式翻译**本身可以用**（它是网页翻译框架），只是它默认引擎 DeepL/Google 需要翻墙。如果你想留着它：
+- 把翻译引擎切换成"腾讯翻译君"或"火山翻译"（都需要少量配置）
+- 详见备份文档 `docs/legacy-safari-ai-setup.md`（会在下一步生成）
+
+**Q: 我 macOS 版本较老装不上豆包插件怎么办？**
+A: 直接用 https://doubao.com 网页版，加书签放在收藏栏，效果基本一致。
